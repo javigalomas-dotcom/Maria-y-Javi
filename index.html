@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>María &amp; Javier · 17.10.2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --beige:       #f5f0e8;
+      --cream:       #faf7f2;
+      --olive:       #7a7d5a;
+      --olive-dark:  #5c5f40;
+      --terra:       #b8806a;
+      --terra-light: #d4a090;
+      --brown:       #3d2b1f;
+      --white:       #ffffff;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--brown);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ════════════════════════════
+       HERO
+    ════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Background image layer with zoom animation */
+    .hero-bg {
+      position: absolute;
+      inset: -6%;
+      background-image: url("foto.jpg");
+      background-size: cover;
+      background-position: center;
+      animation: heroZoom 20s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1); }
+      to   { transform: scale(1.07); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(22, 15, 10, 0.28) 0%,
+        rgba(22, 15, 10, 0.50) 50%,
+        rgba(22, 15, 10, 0.68) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      padding: 2rem;
+      animation: fadeUp 1.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: clamp(0.6rem, 1.4vw, 0.78rem);
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.68);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-names {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(3.4rem, 11vw, 8rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-names span { font-style: italic; }
+
+    .hero-ampersand {
+      display: block;
+      font-size: clamp(1.8rem, 5.5vw, 4rem);
+      opacity: 0.45;
+      line-height: 1.15;
+    }
+
+    .hero-date {
+      margin-top: 2.2rem;
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 4vw, 2.8rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      border-top: 1px solid rgba(255, 255, 255, 0.28);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 0.85rem 3rem;
+      display: inline-block;
+    }
+
+    /* ─── AUDIO BUTTON ─── */
+    .audio-btn {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.15rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .audio-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: scale(1.04);
+    }
+
+    .audio-icon { width: 17px; height: 17px; flex-shrink: 0; }
+
+    /* ─── SCROLL HINT ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55), transparent);
+      animation: scrollDrop 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0%, 100% { opacity: 0; transform: scaleY(0.4) translateY(-10px); }
+      50%       { opacity: 1; transform: scaleY(1)   translateY(0); }
+    }
+
+    /* ════════════════════════════
+       INTRO
+    ════════════════════════════ */
+    .intro {
+      background: var(--cream);
+      text-align: center;
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .intro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 64px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+
+    .intro-text {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--brown);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .intro-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.8rem;
+    }
+
+    .intro-ornament::before,
+    .intro-ornament::after {
+      content: '';
+      width: 64px;
+      height: 1px;
+      background: var(--terra-light);
+    }
+
+    .ornament-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--terra);
+    }
+
+    /* ════════════════════════════
+       EL DÍA
+    ════════════════════════════ */
+    .el-dia {
+      background: var(--beige);
+      padding: 7rem 2rem;
+    }
+
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--terra);
+      display: block;
+      margin-bottom: 0.8rem;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      text-align: center;
+      color: var(--brown);
+      margin-bottom: 1rem;
+    }
+
+    .section-date-big {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.2vw, 1.5rem);
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-align: center;
+      color: var(--olive-dark);
+      margin-bottom: 4.5rem;
+    }
+
+    .dia-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 620px) {
+      .dia-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .dia-card {
+      text-align: center;
+      padding: 3.2rem 2rem 2.8rem;
+      background: var(--white);
+      border-radius: 2px;
+      border-top: 2px solid var(--terra-light);
+    }
+
+    .dia-card-type {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--terra);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .dia-card-time {
+      font-family: var(--serif);
+      font-size: 2.9rem;
+      font-weight: 300;
+      color: var(--brown);
+      line-height: 1;
+      margin-bottom: 1.4rem;
+    }
+
+    .dia-card h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--brown);
+      margin-bottom: 0.55rem;
+    }
+
+    .dia-card p {
+      font-size: 0.82rem;
+      color: #7a6a5e;
+      line-height: 1.65;
+      margin-bottom: 1.4rem;
+    }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive-dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--olive);
+      padding-bottom: 2px;
+      font-weight: 400;
+      transition: color 0.22s, border-color 0.22s;
+    }
+
+    .map-link:hover { color: var(--terra); border-color: var(--terra); }
+
+    /* ════════════════════════════
+       RSVP
+    ════════════════════════════ */
+    .rsvp {
+      background: var(--brown);
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvp::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .rsvp-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .rsvp .section-label { color: var(--terra-light); }
+    .rsvp .section-title { color: var(--beige); }
+
+    .rsvp-subtitle {
+      text-align: center;
+      font-size: 0.88rem;
+      color: rgba(245, 240, 232, 0.55);
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── Form fields ─── */
+    .form-group { margin-bottom: 2rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--terra-light);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(245, 240, 232, 0.14);
+      border-radius: 2px;
+      padding: 0.9rem 1.1rem;
+      color: var(--beige);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .form-input::placeholder { color: rgba(245, 240, 232, 0.28); }
+    .form-input:focus {
+      border-color: var(--terra-light);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    /* ─── Radio buttons ─── */
+    .radio-group { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+
+    .radio-label { flex: 1; min-width: 120px; }
+
+    .radio-label input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .radio-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.78rem 1rem;
+      border: 1px solid rgba(245, 240, 232, 0.18);
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.5);
+      transition: background 0.22s, border-color 0.22s, color 0.22s;
+      user-select: none;
+      text-align: center;
+    }
+
+    .radio-label input[type="radio"]:checked + .radio-inner {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: var(--white);
+    }
+
+    .radio-label:hover .radio-inner {
+      border-color: rgba(212, 160, 144, 0.55);
+      color: rgba(245, 240, 232, 0.85);
+    }
+
+    /* ─── Submit button ─── */
+    .btn-submit {
+      width: 100%;
+      margin-top: 2.5rem;
+      padding: 1.1rem 2rem;
+      background: var(--terra);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.28s, transform 0.15s;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-submit:hover:not(:disabled) { background: #a36a54; }
+    .btn-submit:active:not(:disabled) { transform: scale(0.985); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    .btn-dots {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--white);
+      animation: dotBounce 1.2s ease-in-out infinite;
+    }
+
+    .btn-dot:nth-child(2) { animation-delay: 0.2s; }
+    .btn-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.35; }
+      40%            { transform: scale(1);   opacity: 1; }
+    }
+
+    /* ════════════════════════════
+       NÚMERO DE CUENTA
+    ════════════════════════════ */
+    .cuenta {
+      background: var(--cream);
+      padding: 6rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .cuenta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 56px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+
+    .cuenta-msg {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--brown);
+      max-width: 580px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.65;
+    }
+
+    .cuenta-iban {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: clamp(0.92rem, 2vw, 1.18rem);
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--olive-dark);
+      background: var(--beige);
+      border: 1px solid rgba(184, 128, 106, 0.25);
+      border-radius: 2px;
+      padding: 0.9rem 2rem;
+    }
+
+    .cuenta-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .cuenta-ornament::before,
+    .cuenta-ornament::after {
+      content: '';
+      width: 50px;
+      height: 1px;
+      background: var(--terra-light);
+    }
+
+    /* ════════════════════════════
+       CLOSING
+    ════════════════════════════ */
+    .closing {
+      background: var(--beige);
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+
+    .closing-text {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5.5vw, 3.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--brown);
+    }
+
+    .closing-sub {
+      margin-top: 1.2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--terra);
+    }
+
+    /* ════════════════════════════
+       FINAL IMAGE  (last element)
+    ════════════════════════════ */
+    .final-image {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: block;
+    }
+
+    .final-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ════════════════════════════
+       SCROLL REVEAL
+    ════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">nos casamos</p>
+      <h1 class="hero-names">
+        <span>María</span>
+        <em class="hero-ampersand">&amp;</em>
+        <span>Javier</span>
+      </h1>
+      <p class="hero-date">17 de octubre de 2026</p>
+    </div>
+
+    <!-- Audio toggle -->
+    <button class="audio-btn" id="audioBtn" aria-label="Reproducir música de fondo">
+      <svg class="audio-icon" id="audioIcon" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+      <span id="audioBtnText">Dale al play</span>
+    </button>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+
+    <!-- Audio element -->
+    <audio id="bgAudio" loop preload="none">
+      <source src="surrender.mp3" type="audio/mpeg" />
+    </audio>
+  </section>
+
+
+  <!-- ══════════ INTRO ══════════ -->
+  <section class="intro">
+    <p class="intro-text reveal">
+      "Una relación que se entiende sola, porque está hecha de lo que importa."
+    </p>
+    <div class="intro-ornament reveal">
+      <div class="ornament-dot"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════ EL DÍA ══════════ -->
+  <section class="el-dia">
+    <span class="section-label reveal">La boda</span>
+    <h2 class="section-title reveal">El día</h2>
+    <p class="section-date-big reveal">17 / 10 / 2026</p>
+
+    <div class="dia-grid">
+
+      <div class="dia-card reveal">
+        <span class="dia-card-type">Ceremonia</span>
+        <p class="dia-card-time">13:00h</p>
+        <h3>Iglesia de Santo Tomás de Canterbury</h3>
+        <p>C. de la Iglesia, 14<br>Vegas de Matute</p>
+        <a class="map-link"
+           href="https://maps.google.com/?q=Iglesia+Santo+Tomás+de+Canterbury,+Vegas+de+Matute"
+           target="_blank" rel="noopener noreferrer">
+          Ver ubicación en Google Maps
+        </a>
+      </div>
+
+      <div class="dia-card reveal" style="transition-delay: 0.12s">
+        <span class="dia-card-type">Celebración</span>
+        <p class="dia-card-time">A&nbsp;continuación</p>
+        <h3>Finca Aldeallana</h3>
+        <p>N-110, km 210, 5<br>La Lastrilla</p>
+        <a class="map-link"
+           href="https://maps.google.com/?q=Finca+Aldeallana,+N-110+km+210+La+Lastrilla"
+           target="_blank" rel="noopener noreferrer">
+          Ver ubicación en Google Maps
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════ RSVP ══════════ -->
+  <section class="rsvp">
+    <div class="rsvp-inner">
+      <span class="section-label reveal">Confirmación</span>
+      <h2 class="section-title reveal">¿Asistirás?</h2>
+      <p class="rsvp-subtitle reveal">Cuéntanos para poder organizarlo todo con cariño</p>
+
+      <form id="rsvpForm"
+            action="https://formspree.io/f/mdapwqoo"
+            method="POST"
+            class="reveal">
+
+        <input type="hidden" name="_subject"
+               value="Nueva confirmación boda María y Javier" />
+
+        <!-- Nombre -->
+        <div class="form-group">
+          <label class="form-label" for="nombre">Tu nombre *</label>
+          <input class="form-input" type="text" id="nombre" name="nombre"
+                 placeholder="Nombre y apellidos" required />
+        </div>
+
+        <!-- Asistencia -->
+        <div class="form-group">
+          <label class="form-label">¿Asistirás? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="asistencia" value="Sí, allí estaré" required />
+              <span class="radio-inner">Sí, allí estaré 🎉</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="asistencia" value="No podré ir" />
+              <span class="radio-inner">No podré ir</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Acompañante -->
+        <div class="form-group">
+          <label class="form-label" for="acompanante">Nombre de tu acompañante</label>
+          <input class="form-input" type="text" id="acompanante" name="acompanante"
+                 placeholder="Si vienes acompañado/a" />
+        </div>
+
+        <!-- Bus -->
+        <div class="form-group">
+          <label class="form-label">¿Necesitáis bus? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="bus" value="Sí, necesito bus" required />
+              <span class="radio-inner">Sí, lo necesito</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="bus" value="No, tengo transporte" />
+              <span class="radio-inner">No, tengo transporte</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Intolerancias -->
+        <div class="form-group">
+          <label class="form-label" for="intolerancias">Alergias o intolerancias</label>
+          <input class="form-input" type="text" id="intolerancias" name="intolerancias"
+                 placeholder="Cuéntanos si lo necesitas" />
+        </div>
+
+        <!-- Canción -->
+        <div class="form-group">
+          <label class="form-label" for="cancion">¿Qué canción no puede faltar?</label>
+          <input class="form-input" type="text" id="cancion" name="cancion"
+                 placeholder="La que te haría saltar a la pista" />
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-submit" type="submit" id="submitBtn">
+          <span id="btnText">Enviar</span>
+          <span class="btn-dots" id="btnDots">
+            <span class="btn-dot"></span>
+            <span class="btn-dot"></span>
+            <span class="btn-dot"></span>
+          </span>
+        </button>
+
+      </form>
+    </div>
+  </section>
+
+
+  <!-- ══════════ NÚMERO DE CUENTA ══════════ -->
+  <section class="cuenta">
+    <p class="cuenta-msg reveal">
+      Lo que más ilusión nos hace es compartir este día con vosotros.
+      Si además queréis ayudarnos en esta nueva etapa podéis hacerlo aquí:
+    </p>
+    <p class="cuenta-iban reveal">ES79 0128 0036 0301 0011 1922</p>
+    <div class="cuenta-ornament reveal">
+      <div class="ornament-dot"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════ CLOSING ══════════ -->
+  <section class="closing">
+    <p class="closing-text reveal">¡Muchas gracias, os esperamos!</p>
+    <p class="closing-sub reveal">María &amp; Javier · 17.10.2026</p>
+  </section>
+
+
+  <!-- ══════════ FINAL IMAGE (last element) ══════════ -->
+  <div class="final-image">
+    <img src="arbol.jpg" alt="Atardecer en el campo" loading="lazy" />
+  </div>
+
+
+  <!-- ══════════ JAVASCRIPT ══════════ -->
+  <script>
+    /* ── 1. Audio player ─────────────────────────────────────── */
+    (function () {
+      var audio = document.getElementById('bgAudio');
+      var btn   = document.getElementById('audioBtn');
+      var icon  = document.getElementById('audioIcon');
+      var label = document.getElementById('audioBtnText');
+
+      var SVG_PLAY  = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+      var SVG_PAUSE = '<line x1="6" y1="4" x2="6" y2="20"></line>'
+                    + '<line x1="18" y1="4" x2="18" y2="20"></line>';
+
+      audio.volume = 0.3;
+
+      btn.addEventListener('click', function () {
+        if (audio.paused) {
+          audio.play().catch(function () {});
+          icon.innerHTML    = SVG_PAUSE;
+          label.textContent = 'Pausar';
+        } else {
+          audio.pause();
+          icon.innerHTML    = SVG_PLAY;
+          label.textContent = 'Dale al play';
+        }
+      });
+    }());
+
+
+    /* ── 2. Scroll reveal ────────────────────────────────────── */
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+
+      items.forEach(function (el) { io.observe(el); });
+    }());
+
+
+    /* ── 3. Form – visual feedback (Formspree handles submission) */
+    (function () {
+      var form  = document.getElementById('rsvpForm');
+      var btn   = document.getElementById('submitBtn');
+      var txt   = document.getElementById('btnText');
+      var dots  = document.getElementById('btnDots');
+
+      form.addEventListener('submit', function () {
+        btn.disabled       = true;
+        txt.style.display  = 'none';
+        dots.style.display = 'flex';
+
+        setTimeout(function () {
+          dots.style.display = 'none';
+          btn.innerHTML =
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" '
+            + 'stroke="currentColor" stroke-width="2.5" '
+            + 'stroke-linecap="round" stroke-linejoin="round">'
+            + '<polyline points="20 6 9 17 4 12"></polyline></svg>';
+        }, 2400);
+      });
+    }());
+  </script>
+
+</body>
+</html>
