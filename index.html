@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>María &amp; Javier · 17 · 10 · 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════════ */
+    :root {
+      --cream:        #faf7f2;
+      --cream-warm:   #f5f0e8;
+      --beige:        #ede6d8;
+      --beige-mid:    #e2d8c8;
+      --terra:        #b8806a;
+      --terra-mid:    #c9927c;
+      --terra-light:  #ddb09e;
+      --terra-glow:   rgba(200,180,140,0.6);
+      --olive:        #7a7d5a;
+      --olive-dark:   #5c5f40;
+      --brown:        #3d2b1f;
+      --brown-light:  #5a3e2e;
+      --text-muted:   #5c4f45;
+      --white:        #ffffff;
+      --serif:        'Cormorant Garamond', Georgia, serif;
+      --sans:         'Jost', sans-serif;
+      --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: #3a3a3a;
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════════════════════
+       GLOBAL ANIMATIONS — fade-up reveal
+    ═══════════════════════════════════════════════ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger for sibling groups */
+    .fade-up:nth-child(1) { transition-delay: 0.05s; }
+    .fade-up:nth-child(2) { transition-delay: 0.18s; }
+    .fade-up:nth-child(3) { transition-delay: 0.31s; }
+    .fade-up:nth-child(4) { transition-delay: 0.44s; }
+
+    /* Image hover — premium scale + brightness */
+    .image-hover {
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    .image-hover img {
+      width: 100%;
+      transition: transform 0.8s ease, filter 0.8s ease;
+      will-change: transform;
+    }
+    .image-hover:hover img {
+      transform: scale(1.06);
+      filter: brightness(1.05);
+    }
+
+    /* Fade-in on load for all card images */
+    .event-card-img img,
+    .hotel-img img {
+      opacity: 0;
+      animation: imageFade 1.2s ease forwards;
+    }
+    @keyframes imageFade { to { opacity: 1; } }
+
+    /* ═══════════════════════════════════════════════
+       SHARED TYPOGRAPHY
+    ═══════════════════════════════════════════════ */
+    h2 {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--brown);
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 0.9rem;
+    }
+
+    h3 {
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--terra);
+      display: block;
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+
+    /* Section thread line */
+    .thread-in::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+      margin: 0 auto 0;
+      position: absolute;
+      left: 50%; top: 0;
+      transform: translateX(-50%);
+    }
+
+    /* Ornament divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2.2rem auto 0;
+    }
+    .ornament::before, .ornament::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: var(--terra-light);
+    }
+    .ornament-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--terra);
+    }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Cinematic zoom on separate layer so overflow:hidden clips correctly */
+    .hero-bg {
+      position: absolute;
+      inset: -5%;
+      background: url("foto.jpg") center / cover no-repeat;
+      animation: heroZoom 12s ease-in-out infinite alternate;
+      will-change: transform;
+      z-index: 0;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1); }
+      to   { transform: scale(1.05); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(18, 10, 5, 0.20) 0%,
+        rgba(18, 10, 5, 0.48) 52%,
+        rgba(18, 10, 5, 0.72) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      padding: 2rem 1.5rem;
+      animation: contentIn 1.8s var(--ease-out) both;
+    }
+
+    @keyframes contentIn {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 0.68rem;
+      letter-spacing: 0.50em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.60);
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-names {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(3.6rem, 13vw, 9rem);
+      line-height: 0.93;
+      letter-spacing: -0.015em;
+    }
+    .hero-names span { font-style: italic; }
+
+    .hero-amp {
+      display: block;
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      opacity: 0.38;
+      line-height: 1.08;
+    }
+
+    .hero-date-row {
+      margin-top: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .hero-date {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 3.6vw, 2.55rem);
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      border-top: 1px solid rgba(255,255,255,.25);
+      border-bottom: 1px solid rgba(255,255,255,.25);
+      padding: 0.8rem 3rem;
+      display: inline-block;
+    }
+
+    /* Calendar CTA */
+    .btn-calendar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.64rem;
+      font-weight: 400;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 50px;
+      padding: 0.56rem 1.3rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-calendar:hover {
+      background: rgba(255,255,255,.18);
+      color: var(--white);
+      transform: scale(1.04);
+    }
+    .btn-calendar:active { transform: scale(0.97); }
+
+    /* ── Audio button ── */
+    .audio-btn {
+      position: absolute;
+      bottom: 2.2rem;
+      right: 2.2rem;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: rgba(255,255,255,.09);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.24);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.64rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.68rem 1.25rem;
+      border-radius: 50px;
+      cursor: pointer;
+      animation: pulse 2s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(255,255,255,.20); transform: scale(1); }
+      50%  { box-shadow: 0 0 0 10px rgba(255,255,255,.00); transform: scale(1.05); }
+      100% { box-shadow: 0 0 0 0   rgba(255,255,255,.00); transform: scale(1); }
+    }
+
+    .audio-btn:hover { transform: scale(1.05); background: rgba(255,255,255,.18); }
+
+    /* Playing state — glow + stop pulse */
+    .audio-btn.playing {
+      animation: none;
+      transform: scale(1);
+      box-shadow: 0 0 12px var(--terra-glow);
+      border-color: rgba(200,180,140,.55);
+    }
+
+    .audio-icon { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* Scroll thread */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.55), transparent);
+      animation: threadDrop 2.4s ease-in-out infinite;
+    }
+    @keyframes threadDrop {
+      0%,100% { opacity: 0; transform: scaleY(.35) translateY(-10px); }
+      50%      { opacity: 1; transform: scaleY(1)   translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       INTRO
+    ═══════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════
+       EL DÍA
+    ═══════════════════════════════════════════════ */
+    .el-dia {
+      background: var(--cream-warm);
+      padding: 7rem 2rem 8rem;
+    }
+
+    .day-sub {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.20em;
+      text-align: center;
+      color: var(--olive-dark);
+      margin-bottom: 4.5rem;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 940px;
+      margin: 0 auto;
+    }
+    @media (max-width: 700px) {
+      .events-grid { grid-template-columns: 1fr; }
+    }
+
+    .event-card {
+      background: var(--white);
+      border-radius: 2px;
+      border-top: 2px solid var(--terra-light);
+      overflow: hidden;
+      /* Entrance animation state — revealed by JS observer */
+      transform: translateY(40px);
+      opacity: 0;
+      transition: transform 0.8s ease, opacity 0.8s ease, box-shadow 0.4s ease;
+    }
+    .event-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .event-card:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+    /* Stagger — ceremonia first, celebración slightly after */
+    .event-card:nth-child(1) { transition-delay: 0.10s; }
+    .event-card:nth-child(2) { transition-delay: 0.24s; }
+
+    .event-card-img {
+      width: 100%;
+      height: 240px;
+      position: relative;
+    }
+    .event-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .event-body {
+      padding: 2.4rem 2rem 2.8rem;
+      text-align: center;
+    }
+
+    .event-tag {
+      font-family: var(--sans);
+      font-size: 0.57rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--terra);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.55rem;
+    }
+
+    .event-time {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--brown);
+      line-height: 1;
+      margin-bottom: 1.3rem;
+    }
+
+    .event-card h3 {
+      font-family: var(--serif);
+      font-size: 1.18rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--brown);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .event-card p {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.3rem;
+    }
+
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive-dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--olive);
+      padding-bottom: 2px;
+      transition: color 0.22s, border-color 0.22s;
+    }
+    .map-link:hover { color: var(--terra); border-color: var(--terra); }
+
+    /* ═══════════════════════════════════════════════
+       ALOJAMIENTO
+    ═══════════════════════════════════════════════ */
+    .alojamiento {
+      background: var(--cream);
+      padding: 7rem 2rem 8rem;
+      position: relative;
+    }
+    .alojamiento::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+
+    .hotel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 940px;
+      margin: 3.5rem auto 0;
+    }
+    @media (max-width: 700px) {
+      .hotel-grid { grid-template-columns: 1fr; }
+    }
+
+    .hotel-card {
+      background: var(--white);
+      border-radius: 2px;
+      border-top: 2px solid var(--terra-light);
+      overflow: hidden;
+      /* Entrance animation state */
+      transform: translateY(40px);
+      opacity: 0;
+      transition: transform 0.8s ease, opacity 0.8s ease, box-shadow 0.4s ease;
+    }
+    .hotel-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .hotel-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0,0,0,.10);
+    }
+    /* Stagger */
+    .hotel-card:nth-child(1) { transition-delay: 0.10s; }
+    .hotel-card:nth-child(2) { transition-delay: 0.22s; }
+
+    .hotel-img {
+      width: 100%; height: 210px;
+    }
+    .hotel-img img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .hotel-body {
+      padding: 2rem 2rem 2.4rem;
+      text-align: center;
+    }
+
+    .hotel-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--brown);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .hotel-card p {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.1rem;
+    }
+
+    /* ═══════════════════════════════════════════════
+       CUENTA
+    ═══════════════════════════════════════════════ */
+    .cuenta {
+      background: var(--cream-warm);
+      padding: 6rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .cuenta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+
+    .cuenta-msg {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--brown);
+      max-width: 560px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.7;
+    }
+
+    .cuenta-row {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      justify-content: center;
+    }
+
+    .cuenta-iban {
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.13em;
+      color: var(--olive-dark);
+      background: var(--white);
+      border: 1px solid rgba(184,128,106,.25);
+      border-radius: 2px;
+      padding: 0.85rem 1.8rem;
+    }
+
+    .btn-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--sans);
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terra);
+      background: transparent;
+      border: 1px solid var(--terra-light);
+      border-radius: 50px;
+      padding: 0.58rem 1.3rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.28s, color 0.28s, border-color 0.28s, transform 0.15s;
+    }
+    .btn-copy:hover { background: var(--terra); color: var(--white); border-color: var(--terra); }
+    .btn-copy:active { transform: scale(.95); }
+    .btn-copy.copied { background: var(--olive-dark); color: var(--white); border-color: var(--olive-dark); }
+
+    /* ═══════════════════════════════════════════════
+       RSVP
+    ═══════════════════════════════════════════════ */
+    .rsvp {
+      background: var(--brown);
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle texture */
+    .rsvp::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='.018'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .rsvp-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .rsvp .eyebrow { color: var(--terra-light); }
+    .rsvp h2 { color: var(--beige); }
+
+    .rsvp-sub {
+      text-align: center;
+      font-size: 16px;
+      color: rgba(237,230,216,.48);
+      margin-bottom: 3.5rem;
+    }
+
+    .form-group { margin-bottom: 1.9rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.60rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--terra-light);
+      margin-bottom: 0.7rem;
+      font-weight: 500;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(237,230,216,.13);
+      border-radius: 2px;
+      padding: 0.92rem 1.15rem;
+      color: var(--beige);
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.28s, background 0.28s;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(237,230,216,.26); }
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--terra-light);
+      background: rgba(255,255,255,.09);
+    }
+    .form-textarea { resize: vertical; min-height: 90px; }
+
+    /* Radios */
+    .radio-group { display: flex; gap: .65rem; flex-wrap: wrap; }
+    .radio-label { flex: 1; min-width: 110px; }
+
+    .radio-label input[type="radio"] {
+      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+    }
+
+    .radio-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: .78rem 1rem;
+      border: 1px solid rgba(237,230,216,.17);
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(237,230,216,.48);
+      transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.18s;
+      user-select: none;
+      text-align: center;
+    }
+    .radio-label:hover .radio-inner {
+      border-color: rgba(212,160,144,.5);
+      color: rgba(237,230,216,.85);
+    }
+    .radio-label input[type="radio"]:checked + .radio-inner {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: var(--white);
+      transform: scale(1.02);
+    }
+
+    /* Submit */
+    .btn-submit {
+      width: 100%;
+      margin-top: 2.6rem;
+      padding: 1.15rem 2rem;
+      background: var(--terra);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 0.70rem;
+      font-weight: 500;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      cursor: pointer;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.28s, transform 0.15s;
+    }
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover:not(:disabled)::after { background: rgba(255,255,255,.07); }
+    .btn-submit:active:not(:disabled) { transform: scale(.985); }
+    .btn-submit:disabled { opacity: .72; cursor: not-allowed; }
+    .btn-submit.success  { background: #6b8e6b; color: var(--white); animation: none; }
+
+    /* Spinner */
+    .spinner {
+      display: none;
+      width: 20px; height: 20px;
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ═══════════════════════════════════════════════
+       CLOSING
+    ═══════════════════════════════════════════════ */
+    .closing {
+      background: var(--cream);
+      text-align: center;
+      padding: 6.5rem 2rem;
+      position: relative;
+    }
+    .closing::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+
+    .closing-text {
+      font-family: var(--serif);
+      font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--brown);
+      line-height: 1.15;
+    }
+    .closing-sub {
+      margin-top: 1.2rem;
+      font-size: 0.66rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--terra);
+    }
+
+    /* ═══════════════════════════════════════════════
+       FINAL IMAGE
+    ═══════════════════════════════════════════════ */
+    .final-image {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: block;
+      line-height: 0;
+    }
+    .final-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 18s ease-in-out;
+    }
+    .final-image:hover img {
+      transform: scale(1.04);
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE — MOBILE TYPOGRAPHY
+    ═══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      h2 { font-size: 24px; }
+      h3 { font-size: 20px; }
+      p  { font-size: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      h2 { font-size: 22px; }
+      .hero-date { padding: .75rem 1.4rem; }
+      .cuenta-iban { font-size: .88rem; letter-spacing: .08em; padding: .75rem 1.2rem; }
+      .event-card-img, .hotel-img { height: 190px; }
+    }
+
+    /* All buttons — legible and consistent */
+    button {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    /* ═══════════════════════════════════════════════
+       TRANSPORTE
+    ═══════════════════════════════════════════════ */
+    .transporte {
+      background: var(--cream-warm);
+      padding: 6rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .transporte::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 56px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+    .transporte-text {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--brown);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════════
+       IMAGE BLOCK (full-width between sections)
+    ═══════════════════════════════════════════════ */
+    .image-block {
+      width: 100%;
+      line-height: 0;
+    }
+    .image-block img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transform: scale(0.98);
+      transition: transform 0.8s ease;
+    }
+    .image-block.visible img {
+      transform: scale(1);
+    }
+
+    /* ═══════════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════════ */
+    .contact {
+      background: var(--cream);
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+    }
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, transparent, var(--terra-light));
+    }
+    .contact-intro {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--brown);
+      max-width: 560px;
+      margin: 0 auto 1.8rem;
+    }
+    .contact-name {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--brown);
+    }
+    .contact-name strong {
+      font-weight: 500;
+    }
+
+    /* Mobile — prevent blue link auto-detection */
+    .no-link {
+      color: inherit !important;
+      text-decoration: none !important;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    a[href^="tel"] {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ████████████████████████
+       HERO
+  ████████████████████████ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">nos casamos</p>
+
+      <h1 class="hero-names">
+        <span>María</span>
+        <em class="hero-amp">&amp;</em>
+        <span>Javier</span>
+      </h1>
+
+      <div class="hero-date-row">
+        <span class="hero-date">17 de octubre de 2026</span>
+
+        <button class="btn-calendar" id="btnCalendar" type="button"
+                aria-label="Guardar en calendario">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8"  y1="2" x2="8"  y2="6"></line>
+            <line x1="3"  y1="10" x2="21" y2="10"></line>
+          </svg>
+          Guardar en calendario
+        </button>
+      </div>
+    </div>
+
+    <!-- Audio toggle -->
+    <button class="audio-btn" id="audioBtn" aria-label="Reproducir música">
+      <svg class="audio-icon" id="audioIcon" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+      <span id="audioBtnText">Dale al play y continúa</span>
+    </button>
+
+    <!-- Scroll thread -->
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+
+    <!-- Background audio -->
+    <audio id="bgAudio" loop preload="none">
+      <source src="surrender.mp3" type="audio/mpeg" />
+    </audio>
+  </section>
+
+
+  <!-- ████████████████████████
+       EL DÍA
+  ████████████████████████ -->
+  <section class="el-dia">
+    <span class="eyebrow fade-up">La boda</span>
+    <h2 class="fade-up">El día</h2>
+    <p class="day-sub fade-up">17 · octubre · 2026 · Segovia</p>
+
+    <div class="events-grid">
+
+      <!-- CEREMONIA -->
+      <div class="event-card">
+        <div class="event-card-img image-hover">
+          <img src="ceremonia.jpg" alt="Iglesia de Santo Tomás de Canterbury, Segovia"
+               loading="lazy" />
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Ceremonia</span>
+          <p class="event-time">13:00h</p>
+          <h3>Iglesia de Santo Tomás de Canterbury</h3>
+          <p>C. de la Iglesia, 14<br>Vegas de Matute, Segovia</p>
+          <a class="map-link"
+             href="https://maps.google.com/?q=Iglesia+Santo+Tomás+de+Canterbury,+Vegas+de+Matute,+Segovia"
+             target="_blank" rel="noopener noreferrer">
+            Ver en Google Maps
+          </a>
+        </div>
+      </div>
+
+      <!-- CELEBRACIÓN -->
+      <div class="event-card">
+        <div class="event-card-img image-hover">
+          <img src="aldeallana.jpg" alt="Finca Aldeallana, Segovia" loading="lazy" />
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Celebración</span>
+          <p class="event-time">A&nbsp;continuación</p>
+          <h3>Finca Aldeallana</h3>
+          <p>N-110, Km. 210,5<br>40423 Valdeprados, Segovia</p>
+          <a class="map-link"
+             href="https://maps.google.com/?q=Finca+Aldeallana,+La+Lastrilla,+Segovia"
+             target="_blank" rel="noopener noreferrer">
+            Ver en Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ████████████████████████
+       AUTOBUSES
+  ████████████████████████ -->
+  <section class="transporte">
+    <span class="eyebrow fade-up">Autobuses</span>
+    <p class="transporte-text fade-up">
+      Habrá autobuses desde Madrid hasta la ceremonia, de la ceremonia a la celebración, y de vuelta a Madrid. Próximamente compartiremos todos los detalles sobre los puntos de salida, ubicación y horarios.
+    </p>
+    <div class="ornament fade-up"><div class="ornament-dot"></div></div>
+  </section>
+
+
+  <!-- ████████████████████████
+       IMAGE BLOCK
+  ████████████████████████ -->
+  <div class="image-block fade-up">
+    <img src="casa.jpg" alt="Finca detalle" loading="lazy" />
+  </div>
+
+
+  <!-- ████████████████████████
+       CUENTA BANCARIA
+  ████████████████████████ -->
+  <section class="cuenta">
+    <span class="eyebrow fade-up">Lista de bodas</span>
+    <p class="cuenta-msg fade-up">
+      Lo que más ilusión nos hace es compartir este día con vosotros.
+      Si además queréis ayudarnos en esta nueva etapa podéis hacerlo aquí:
+    </p>
+
+    <div class="cuenta-row fade-up">
+      <span class="cuenta-iban no-link">ES79 0128 0036 0301 0011 1922</span>
+      <button class="btn-copy" id="btnCopy" type="button" aria-label="Copiar número de cuenta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span id="copyLabel">Copiar número</span>
+      </button>
+    </div>
+
+    <div class="ornament fade-up"><div class="ornament-dot"></div></div>
+
+    <!-- Clipboard sound -->
+    <audio id="copySound" preload="auto">
+      <source src="sonido.mp3" type="audio/mpeg" />
+    </audio>
+  </section>
+
+
+
+  <!-- ████████████████████████
+       FORMULARIO RSVP
+  ████████████████████████ -->
+  <section class="rsvp">
+    <div class="rsvp-inner">
+      <span class="eyebrow fade-up">Confirmación</span>
+      <h2 class="fade-up">¿Asistirás?</h2>
+      <p class="rsvp-sub fade-up">Cuéntanos para poder organizarlo todo con cariño</p>
+
+
+      <form id="rsvpForm"
+            class="fade-up"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSd_HEkEPKrRIT-y9-lwGo9FiZATMFyyBeJMb4wQJSviyZfNNw/formResponse"
+            method="POST"
+            target="hidden_iframe">
+
+        <!-- Nombre -->
+        <div class="form-group">
+          <label class="form-label" for="nombre">Tu nombre *</label>
+          <input class="form-input" type="text" id="nombre"
+                 name="entry.759840276"
+                 placeholder="Nombre y apellidos" required />
+        </div>
+
+        <!-- Dirección -->
+        <div class="form-group">
+          <label class="form-label" for="direccion">Dirección postal *</label>
+          <textarea class="form-textarea" id="direccion"
+                    name="entry.580229432"
+                    placeholder="Dirección completa para el envío de invitaciones"
+                    required></textarea>
+        </div>
+
+        <!-- Asistencia -->
+        <div class="form-group">
+          <label class="form-label">¿Asistirás? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="entry.1179837419" value="Sí, allí estaré" required />
+              <span class="radio-inner">Sí, allí estaré 🎉</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="entry.1179837419" value="No podré ir" />
+              <span class="radio-inner">No podré ir</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Acompañante -->
+        <div class="form-group">
+          <label class="form-label" for="acompanante">Nombre de tu acompañante</label>
+          <input class="form-input" type="text" id="acompanante"
+                 name="entry.772015825"
+                 placeholder="Si vienes acompañado/a" />
+        </div>
+
+        <!-- Bus -->
+        <div class="form-group">
+          <label class="form-label">¿Necesitáis bus? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="entry.786056553" value="Sí, necesito bus" required />
+              <span class="radio-inner">Sí, lo necesito</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="entry.786056553" value="No, tengo transporte" />
+              <span class="radio-inner">No, tengo transporte</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Intolerancias -->
+        <div class="form-group">
+          <label class="form-label" for="intolerancias">Alergias o intolerancias</label>
+          <input class="form-input" type="text" id="intolerancias"
+                 name="entry.2130937595"
+                 placeholder="Cuéntanos si lo necesitas" />
+        </div>
+
+        <!-- Canción -->
+        <div class="form-group">
+          <label class="form-label" for="cancion">¿Qué canción no puede faltar?</label>
+          <input class="form-input" type="text" id="cancion"
+                 name="entry.73762317"
+                 placeholder="La que te haría saltar a la pista" />
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-submit" type="submit" id="submitBtn">Enviar</button>
+
+      </form>
+
+      <!-- Hidden iframe captures Google Forms response — prevents redirect -->
+      <iframe name="hidden_iframe" style="display:none;" aria-hidden="true"></iframe>
+    </div>
+  </section>
+
+
+  <!-- ████████████████████████
+       CONTACTO
+  ████████████████████████ -->
+  <section class="contact">
+    <p class="contact-intro fade-up">
+      Si tenéis cualquier pregunta o necesitáis información sobre alojamientos cercanos u otros detalles, no dudéis en escribirnos:
+    </p>
+    <p class="contact-name no-link fade-up">
+      <strong>María</strong> +34 628 115 005
+    </p>
+    <p class="contact-name no-link fade-up">
+      <strong>Javier</strong> +34 664 156 870
+    </p>
+  </section>
+
+
+  <!-- ████████████████████████
+       CLOSING
+  ████████████████████████ -->
+  <section class="closing">
+    <p class="closing-text fade-up">¡Muchas gracias, os esperamos!</p>
+    <p class="closing-sub fade-up">María &amp; Javier · 17 · 10 · 2026</p>
+  </section>
+
+
+  <!-- ████████████████████████
+       FINAL IMAGE — always last
+  ████████████████████████ -->
+  <div class="final-image">
+    <img src="arbol.jpg" alt="Paisaje de Segovia al atardecer" loading="lazy" />
+  </div>
+
+
+  <!-- ████████████████████████
+       JAVASCRIPT
+  ████████████████████████ -->
+  <script>
+    /* ── 1. Scroll reveal ─────────────────────────────────────── */
+    (function () {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.11 });
+
+      document.querySelectorAll('.fade-up').forEach(function (el) {
+        observer.observe(el);
+      });
+      /* Event cards (ceremony + celebration) — entrance via .visible */
+      document.querySelectorAll('.event-card').forEach(function (el) {
+        observer.observe(el);
+      });
+      /* Hotel cards — same pattern */
+      document.querySelectorAll('.hotel-card').forEach(function (el) {
+        observer.observe(el);
+      });
+    }());
+
+
+    /* ── 2. Background music ──────────────────────────────────── */
+    (function () {
+      var audio  = document.getElementById('bgAudio');
+      var btn    = document.getElementById('audioBtn');
+      var icon   = document.getElementById('audioIcon');
+      var label  = document.getElementById('audioBtnText');
+
+      var PLAY  = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+      var PAUSE = '<line x1="6" y1="4" x2="6" y2="20"></line>'
+                + '<line x1="18" y1="4" x2="18" y2="20"></line>';
+
+      audio.volume = 0.2;
+
+      btn.addEventListener('click', function () {
+        if (audio.paused) {
+          audio.play().catch(function () {});
+          icon.innerHTML    = PAUSE;
+          label.textContent = 'Pausar música';
+          btn.classList.add('playing');
+        } else {
+          audio.pause();
+          icon.innerHTML    = PLAY;
+          label.textContent = 'Dale al play y continúa';
+          btn.classList.remove('playing');
+        }
+      });
+    }());
+
+
+    /* ── 3. Calendar .ics download ─────────────────────────────── */
+    (function () {
+      document.getElementById('btnCalendar').addEventListener('click', function () {
+        var lines = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//Boda María y Javier//ES',
+          'CALSCALE:GREGORIAN',
+          'METHOD:PUBLISH',
+          'BEGIN:VEVENT',
+          'SUMMARY:Boda María y Javier',
+          'DTSTART:20261017T130000',
+          'DTEND:20261018T000000',
+          'LOCATION:Segovia — Ceremonia: Iglesia Santo Tomás de Canterbury\\, Vegas de Matute. Celebración: Finca Aldeallana\\, La Lastrilla.',
+          'DESCRIPTION:¡Nos casamos! Ceremonia 13:00h · Vegas de Matute\\, Segovia. Celebración · Finca Aldeallana\\, La Lastrilla\\, Segovia.',
+          'STATUS:CONFIRMED',
+          'END:VEVENT',
+          'END:VCALENDAR'
+        ].join('\r\n');
+
+        try {
+          var blob = new Blob([lines], { type: 'text/calendar;charset=utf-8' });
+          var url  = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url; a.download = 'boda-maria-javier.ics';
+          document.body.appendChild(a); a.click();
+          document.body.removeChild(a);
+          setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+        } catch (e) {
+          var a2 = document.createElement('a');
+          a2.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(lines);
+          a2.download = 'boda-maria-javier.ics';
+          document.body.appendChild(a2); a2.click();
+          document.body.removeChild(a2);
+        }
+      });
+    }());
+
+
+    /* ── 4. Copy IBAN + sound ──────────────────────────────────── */
+    (function () {
+      var btn   = document.getElementById('btnCopy');
+      var label = document.getElementById('copyLabel');
+      var snd   = document.getElementById('copySound');
+      var IBAN  = 'ES79 0128 0036 0301 0011 1922';
+      var timer = null;
+
+      btn.addEventListener('click', function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(IBAN).catch(function () {});
+        } else {
+          var t = document.createElement('textarea');
+          t.value = IBAN;
+          t.style.cssText = 'position:fixed;opacity:0;';
+          document.body.appendChild(t);
+          t.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(t);
+        }
+
+        snd.currentTime = 0;
+        snd.play().catch(function () {});
+
+        btn.classList.add('copied');
+        label.textContent = 'Copiado ✓';
+
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'Copiar número';
+        }, 2600);
+      });
+    }());
+
+
+    /* ── 5. Form — Google Forms via hidden iframe (visual feedback only) */
+    (function () {
+      var form = document.getElementById('rsvpForm');
+
+      form.addEventListener('submit', function () {
+        var btn = document.getElementById('submitBtn');
+        btn.textContent = 'Enviado ✔';
+        btn.classList.add('success');
+        btn.disabled = true;
+      });
+    }());
+  </script>
+
+</body>
+</html>
